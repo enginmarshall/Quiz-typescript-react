@@ -7,19 +7,28 @@ import {
   previousQuestion,
   selectAnswer,
 } from '../Redux/quizSlice';
-import { Result } from '../Components/Result';
+import { AnswerOption, SelectedAnswer } from '../Models';
 
 export const Quiz = () => {
   const dispatch = useDispatch();
   const { questions, currentIndexOfQuestion, selectedAnswers } = useSelector(
     (store: RootState) => store.quiz
   );
+  console.log("🚀 ~ Quiz ~ selectedAnswers:", selectedAnswers)
+  console.log("🚀 ~ Quiz ~ currentIndexOfQuestion:", currentIndexOfQuestion)
 
   const currentQuestion = questions[currentIndexOfQuestion];
-  const isLast = currentIndexOfQuestion === questions.length - 1;
+  const isLast = selectedAnswers.length === questions.length;
+  console.log("🚀 ~ Quiz ~ isLast:", isLast)
 
-  const handleOptionChange = (questionId: number, answerText: string) => {
-    dispatch(selectAnswer({ questionId, answerText }));
+  const handleOptionChange = (questionId: number, selectedAnswer: AnswerOption) => {
+    dispatch(
+      selectAnswer(
+        {
+          questionId: questionId,
+          selectedAnswer: { id: selectedAnswer.id, answer: selectedAnswer } as SelectedAnswer
+        }
+      ));
   };
 
   const handlePreviousQuestion = () => {
@@ -30,28 +39,35 @@ export const Quiz = () => {
     dispatch(nextQuestion());
   };
 
-  if (isLast && selectedAnswers[currentQuestion.id]) {
-    return <Result />;
-  }
+  const handleShowResult = () => {
+    console.log('Show result');
+    // dispatch(nextQuestion());
+  };
+
+
+
+  // if (isLast && selectedAnswers[currentQuestion.id]) {
+  //   return <Result />;
+  // }
 
   return (
     <>
       <ProgressBar />
 
       <div>
-        <h4>{currentQuestion.question}</h4>
-        {currentQuestion.option.map((opt, i) => (
+        <h4>{currentQuestion.questionText}</h4>
+        {currentQuestion.answerOptions.map((answerOption, i) => (
           <div key={i}>
             <input
               type='radio'
               id={`option-${currentQuestion.id}-${i}`}
               name={`question-${currentQuestion.id}`}
-              value={opt.text}
-              checked={selectedAnswers[currentQuestion.id] === opt.text}
-              onChange={() => handleOptionChange(currentQuestion.id, opt.text)}
+              value={answerOption.text}
+              checked={selectedAnswers.length > 0 && selectedAnswers[currentQuestion.id].answer.id === answerOption.id}
+              onChange={() => handleOptionChange(currentQuestion.id, answerOption)}
             />
             <label htmlFor={`option-${currentQuestion.id}-${i}`}>
-              {opt.text}
+              {answerOption.text}
             </label>
           </div>
         ))}
@@ -61,21 +77,19 @@ export const Quiz = () => {
         <button
           className={styles.previousBtn}
           onClick={handlePreviousQuestion}
-          disabled={currentIndexOfQuestion === 0}
+          disabled={currentIndexOfQuestion === 1}
         >
           Föregående
         </button>
 
-        <button
-          className={styles.nextBtn}
-          onClick={handleNextQuestion}
-          disabled={
-            !selectedAnswers[currentQuestion.id] ||
-            currentIndexOfQuestion === questions.length - 1
-          }
-        >
-          {isLast ? 'Visa reslutat' : 'Nästa'}
-        </button>
+        {(isLast) ?
+          <button className={styles.nextBtn}
+            onClick={handleShowResult}>Visa resultat</button>
+          :
+          <button className={styles.nextBtn}
+            onClick={handleNextQuestion}>Nästa</button>
+        }
+
       </div>
     </>
   );
