@@ -54,7 +54,7 @@ const questions: Array<Question> = [
     questionText: '2. What motivates you the most in a job?',
     answerOptions: [
       {
-        id: 1,
+        id: 5,
         text: 'Practical and hands-on work.',
         professions: [
           { name: 'Service Electrician', score: 1 } as Profession,
@@ -62,7 +62,7 @@ const questions: Array<Question> = [
         ],
       } as AnswerOption,
       {
-        id: 2,
+        id: 6,
         text: 'Opportunities to innovate and create.',
         professions: [
           { name: 'Entrepreneur', score: 1 } as Profession,
@@ -70,7 +70,7 @@ const questions: Array<Question> = [
         ] as Array<Profession>,
       } as AnswerOption,
       {
-        id: 3,
+        id: 7,
         text: 'Solving complex technical problems.',
         professions: [
           { name: 'Alarm/Security Technician', score: 1 } as Profession,
@@ -79,7 +79,7 @@ const questions: Array<Question> = [
       } as AnswerOption,
 
       {
-        id: 4,
+        id: 8,
         text: 'Teaching and sharing knowledge.',
         professions: [
           { name: 'Vocational Teacher', score: 1 } as Profession
@@ -92,7 +92,7 @@ const questions: Array<Question> = [
     questionText: '3. How do you handle responsibility?',
     answerOptions: [
       {
-        id: 1,
+        id: 9,
         text: 'Taking the lead and making decisions.',
         professions: [
           { name: 'CEO', score: 1 } as Profession,
@@ -100,14 +100,14 @@ const questions: Array<Question> = [
         ],
       } as AnswerOption,
       {
-        id: 2,
+        id: 10,
         text: 'Managing financial aspects of projects.',
         professions: [
           { name: 'Estimator', score: 1 } as Profession
         ] as Array<Profession>,
       } as AnswerOption,
       {
-        id: 3,
+        id: 11,
         text: 'Ensuring safety and compliance.',
         professions: [
           { name: 'Alarm/Security Technician', score: 1 } as Profession,
@@ -116,7 +116,7 @@ const questions: Array<Question> = [
       } as AnswerOption,
 
       {
-        id: 4,
+        id: 14,
         text: 'Working independently and managing my own business.',
         professions: [
           { name: 'Entrepreneur', score: 1 } as Profession
